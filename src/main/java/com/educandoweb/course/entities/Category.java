@@ -1,5 +1,6 @@
 package com.educandoweb.course.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serial;
@@ -42,6 +43,8 @@ public class Category implements Serializable {
         this.name = name;
     }
 
+    @JsonIgnore
+    @ManyToMany(mappedBy = "categories")
     public Set<Product> getProducts() {
         return products;
     }
