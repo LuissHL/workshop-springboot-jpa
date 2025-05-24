@@ -24,6 +24,8 @@ public class Order implements Serializable {
 
     private Integer orderStatus;
 
+    @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
+    private Payment payment;
     @ManyToOne
     @JoinColumn(name = "tb_client")
     private User client;
@@ -77,6 +79,14 @@ public class Order implements Serializable {
 
     public Set<OrderItem> getItems() {
         return items;
+    }
+
+    public Payment getPayment() {
+        return payment;
+    }
+
+    public void setPayment(Payment payment) {
+        this.payment = payment;
     }
 
     @Override
