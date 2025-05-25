@@ -23,15 +23,15 @@ public class Order implements Serializable {
     private Instant moment;
 
     private Integer orderStatus;
-
-    @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
-    private Payment payment;
     @ManyToOne
     @JoinColumn(name = "tb_client")
     private User client;
 
     @OneToMany(mappedBy = "id.order")
     private Set<OrderItem> items = new HashSet<>();
+
+    @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
+    private Payment payment;
 
     public Order() {
     }
@@ -89,6 +89,13 @@ public class Order implements Serializable {
         this.payment = payment;
     }
 
+    public Double getTotal() {
+        double sum = 0.0;
+        for(OrderItem x : items) {
+            sum += x.getSubTotal();
+        }
+        return sum;
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
